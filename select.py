@@ -20,9 +20,11 @@ def select(s):
     :return:
     """
     for i in xrange(len(s)):
-        for j in xrange(i, len(s)):
+        preindex = i
+        for j in xrange(i+1, len(s)):
             if s[i] > s[j]:
-                s[i], s[j] = s[j], s[i]
+                i = j
+        s[preindex], s[i] = s[i], s[preindex]
     return s
 
 

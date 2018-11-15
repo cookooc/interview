@@ -11,7 +11,6 @@ sys.setdefaultencoding('utf-8')
 
 
 def topK1(s, k):
-
     """
         计算S中第K大的数(个人实现)
         算法说明:
@@ -46,7 +45,6 @@ def topK1(s, k):
                     ks.pop(-1)
                     ks.append(v)
                     ks = sorted(ks, reverse=True)
-
     return ks
 
 
