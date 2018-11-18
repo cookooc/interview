@@ -22,14 +22,14 @@ class Chain(object):
         return child
 
     def reverse(self):
-        prev = None
+        next_node = None
         node = self
         while node:
             child = node.child
-            node.link(prev)
-            prev = node
+            node.link(next_node)
+            next_node = node
             node = child
-        return prev
+        return next_node
 
     def __str__(self):
         node_list = []
