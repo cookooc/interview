@@ -8,8 +8,10 @@ sys.setdefaultencoding('utf-8')
 '''
     选择排序
     算法之死记硬背:
-       1. 选择排序在每次的比较中将一个无序的列表分为两部分： 一部分是有序， 一部分无序
-       2. 每次循环指针对无序的列表选出最大或最小的元素 然后放置在该无序列表的首位
+       算法分两层循环, 
+       外层循环代表内层循环最小值的存放位置
+       内层循环负责选出最小值并记录最小值的索引位置
+       内层循环结束将最小值与外层循环标记的存放位置交换
 '''
 
 
@@ -20,12 +22,15 @@ def select(s):
     :return:
     """
     for i in xrange(len(s)):
-        for j in xrange(i, len(s)):
-            if s[i] > s[j]:
-                s[i], s[j] = s[j], s[i]
+        minindex = i
+        for j in xrange(i+1, len(s)):
+            if s[minindex] > s[j]:
+                minindex = j
+        s[i], s[minindex] = s[minindex], s[i]
+        print i, s
     return s
 
 
-o = [5, 5, 4, 5, 44, 38, 27, 49, 26, 46, 19, 47, 48]
+o = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 ss = select(o)
 print ss
