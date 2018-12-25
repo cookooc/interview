@@ -21,17 +21,25 @@ sys.setdefaultencoding('utf-8')
 '''
 
 
-def is_recycle_string(s):
+def is_recycle_string(s, i, j, longest):
     """
         judge the string is recycle
     :param s:
+    :param i:
+    :param j:
+    :param longest:
     :return:
     """
-    length = len(s)
-    for i in xrange(length/2):
-        if s[i] != s[length - i - 1]:
-            return False
-    return True
+    if s[i] == s[j]:
+        if longest:
+            space = longest[1] - longest[0]
+            if space < 3:
+                return True
+            if space >= 3 and longest[0] == i-1 and longest[1] == (j - 1):
+                return True
+        else:
+            return True
+    return False
 
 
 def longest_recycle_string(string):
@@ -40,27 +48,28 @@ def longest_recycle_string(string):
     :param string:
     :return: start_index, end_index
     """
-    count = 0
-    longest = (0, 0)
-    start = 0
+    longest = {}
     for i in xrange(len(string)):
-        for j in xrange(start+1, len(string)):
-            count += 1
-            if is_recycle_string(string[i: j+1]):
-                if (longest[1] - longest[0]) < (j - i):
-                    longest = (i, j)
-                start = j
-        if not start:
-            start = i
-        if len(string[longest[0]: longest[1]+1]) >= (len(string) - i):
-            break
-    print count
-    return longest
+        for j in xrange(i, len(string)):
+            if i == j:
+                longest[(i, j)] = 1
+            elif j - i == 1 and string[j] == string[i]:
+                longest[(i, j)] = 1
+            else:
+                if string[j] == string[i] and (i-1, j-1) in longest:
+                    longest[(i, j)] = 1
+
+    return string[longest[0]: longest[1]+1]
 
 
 if __name__ == '__main__':
 
+    print longest_recycle_string("abcda")
+    print longest_recycle_string("caba")
     print longest_recycle_string('cbbd')
+    """
+    output: (1, 2)
+    """
     """
     output: (1, 2)
     """
@@ -76,7 +85,4 @@ if __name__ == '__main__':
     """
     output: (0, 10)
     """
-    print longest_recycle_string('aaabcdefedcbacc')
-    """
-    output: (2, 12)
-    """
+    print longest_recycle_string('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
