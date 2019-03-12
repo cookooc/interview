@@ -31,13 +31,7 @@ def is_recycle_string(s, i, j, longest):
     :return:
     """
     if s[i] == s[j]:
-        if longest:
-            space = longest[1] - longest[0]
-            if space < 3:
-                return True
-            if space >= 3 and longest[0] == i-1 and longest[1] == (j - 1):
-                return True
-        else:
+        if (i-1, j-1) in longest and longest[(i-1, j-1)] == 1:
             return True
     return False
 
@@ -48,17 +42,19 @@ def longest_recycle_string(string):
     :param string:
     :return: start_index, end_index
     """
-    longest = {}
+    recycle = {}
+    longest = ()
     for i in xrange(len(string)):
         for j in xrange(i, len(string)):
             if i == j:
-                longest[(i, j)] = 1
+                recycle[(i, j)] = 1
+                longe
             elif j - i == 1 and string[j] == string[i]:
-                longest[(i, j)] = 1
+                recycle[(i, j)] = 1
             else:
-                if string[j] == string[i] and (i-1, j-1) in longest:
-                    longest[(i, j)] = 1
-
+                if string[j] == string[i] and ((i-1, j-1) in recycle and recycle[(i-1, j-1)] == 1):
+                    recycle[(i, j)] = 1
+                    if (j - i) > (longest[1] - longest[0])
     return string[longest[0]: longest[1]+1]
 
 
